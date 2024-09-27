@@ -71,8 +71,6 @@ public static List<Player> players = new ArrayList<Player>();
 			Gui.movePlayerOnScreen(oldpos,newpos,direction);
 			me.setLocation(newpos);
 		}
-		
-		
 	}
 	
 	public static Player getPlayerAt(int x, int y) {

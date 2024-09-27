@@ -20,6 +20,4 @@ public class pair {
 	public void setY(int y) {
 		this.y = y;
 	}
-	
-
-}
+	}
