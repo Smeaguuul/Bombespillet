@@ -17,7 +17,6 @@ public class Client {
 		outToServer.writeBytes(navn + '\n');
 		String response = inFromServer.readLine();
 		System.out.println(response);
-		clientSocket.close();
 		Application.launch(Gui.class);
 	}
 };
