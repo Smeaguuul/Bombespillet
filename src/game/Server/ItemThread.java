@@ -9,6 +9,7 @@ public class ItemThread extends Thread {
     @Override
     public void run() {
         try {
+            Thread.sleep(3000);
             while (true) {
                 Thread.sleep(5000);
                 if (Math.random() > 0.5) {
