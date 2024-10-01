@@ -17,22 +17,21 @@ public class ServerThread extends Thread{
 		try {
 			BufferedReader inFromClient = new BufferedReader(new InputStreamReader(connSocket.getInputStream()));
 			DataOutputStream outToClient = new DataOutputStream(connSocket.getOutputStream());
+			ServerGameLogic.addConnection(outToClient);
 
 			// Do the work and the communication with the client here
 			// The following two lines are only an example
 			String clientNavn = inFromClient.readLine();
-			ServerGameLogic.makePlayers(clientNavn);
-			Player me = ServerGameLogic.makePlayers(clientNavn);
-			outToClient.writeBytes("Velkommen" +  '\n' );
+			Player client = ServerGameLogic.makePlayers(clientNavn);
 			System.out.println(clientNavn);
 
 			while (true) {
 				String clientMessage = inFromClient.readLine();
 				switch (clientMessage) {
-					case "UP":    updatePlayer(me, 0,-1,"up");   break;
-					case "DOWN":  updatePlayer(me,0,+1,"down");  break;
-					case "LEFT":  updatePlayer(me,-1,0,"left");  break;
-					case "RIGHT": updatePlayer(me,+1,0,"right"); break;
+					case "UP":    updatePlayer(client, 0,-1,"up");   break;
+					case "DOWN":  updatePlayer(client,0,+1,"down");  break;
+					case "LEFT":  updatePlayer(client,-1,0,"left");  break;
+					case "RIGHT": updatePlayer(client,+1,0,"right"); break;
 					default: break;
 				}
 			}

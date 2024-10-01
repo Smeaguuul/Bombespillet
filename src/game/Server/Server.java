@@ -12,5 +12,4 @@ public class Server {
 			(new ServerThread(connectionSocket)).start();
 		}
 	}
-
 }

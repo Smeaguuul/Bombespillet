@@ -20,8 +20,8 @@ public class Generel {
 			"w  w              ww",
 			"w  w www  w w  ww ww",
 			"w w      ww w     ww",
-			"w   w   ww  w      w",
-			"wwwwwwwwwwwwwwwwwwww"
+			"w   w   ww  w      w",//18
+			"wwwwwwwwwwwwwwwwwwww" //19
 	};
 
 	
