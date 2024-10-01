@@ -27,6 +27,7 @@ public class ServerGameLogic {
     public static void sendData() {
         //Bygger stringen med alt infoen
         StringBuilder outString = new StringBuilder();
+        outString.append("@");
         for (Player player : players) {
             //Vi smider alt data om spilleren ind i en string. '#' splitter spillere. ',' splitter attributer.
             outString.append("#" + player.getName() + ",");
@@ -34,6 +35,11 @@ public class ServerGameLogic {
             outString.append(player.getDirection() + ",");
             outString.append(player.getPoint());
         }
+        outString.append("@");
+        for (Chest chest : chests) {
+            outString.append("#" + chest.getLocation() + "," + chest.getPoints());
+        }
+
         outString.append('\n');
         System.out.println(outString.toString());
         //Sender stringen til alle clients
@@ -69,27 +75,36 @@ public class ServerGameLogic {
         System.out.println(direction);
 
         // collision detection
-        if (isFreeSpot(x + delta_x, y + delta_y)) {
-            pair newpos = new pair(x + delta_x, y + delta_y);
-            player.setLocation(newpos);
-            returnBol = true;
-            if (chests.stream().anyMatch(chest -> chest.getLocation().equals(newpos))) {
-                int index = 0;
-                boolean found = false;
-                while (index == 0 && !found) {
-                    Chest chest;
-                    if (chests.get(index).getLocation().equals(newpos)) {
-                        chest = chests.get(index);
-                        player.addPoints(chest.getPoints());
-                        found = true;
-                    }
-                    index++;
-                }
-            }
+        if (!isFreeSpot(x + delta_x, y + delta_y)) {
+            sendData();
+            return returnBol;
+        }
+        pair newpos = new pair(x + delta_x, y + delta_y);
+        player.setLocation(newpos);
+        returnBol = true;
+
+        //chest detection
+        if (chests.stream().anyMatch(chest -> chest.getLocation().equals(newpos))) {
+            playerFoundChest(player, newpos);
         }
 
         sendData();
         return returnBol;
+    }
+
+    private static void playerFoundChest(Player player, pair position) {
+        int index = 0;
+        boolean found = false;
+        Chest chest = null;
+        while (index == 0 && !found) {
+            if (chests.get(index).getLocation().equals(position)) {
+                chest = chests.get(index);
+                found = true;
+            }
+            index++;
+        }
+        chests.remove(chest);
+        player.addPoints(chest.getPoints());
     }
 
     private static boolean isFreeSpot(int x, int y) {
