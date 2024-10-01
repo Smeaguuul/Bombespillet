@@ -23,11 +23,11 @@ public class ClientListenThread extends Thread {
             Thread.sleep(3000);
             while (true) {
                 stringFromServer = inFromServer.readLine();
+                System.out.println(stringFromServer);
                 clearObjects();
                 String[] stringObjekter = stringFromServer.split("@");
-
                 // Player list
-                String[] playerStrings = stringObjekter[0].split("#");
+                String[] playerStrings = stringObjekter[1].split("#");
                 for (int i = 1; i < playerStrings.length; i++) {
                     String[] playerInfo = playerStrings[i].split(",");
                     pair pair = new pair(Integer.valueOf(playerInfo[1]), Integer.valueOf(playerInfo[2]));
@@ -35,8 +35,8 @@ public class ClientListenThread extends Thread {
                     playerArrayList.add(player);
                 }
                 // Chest list
-                String[] chestStrings = stringObjekter[1].split("#");
-                for (int i = 0; i < chestStrings.length; i++) {
+                String[] chestStrings = stringObjekter[2].split("#");
+                for (int i = 1; i < chestStrings.length; i++) {
                     String[] chestInfo = chestStrings[i].split(",");
                     Chest chest = new Chest(new pair(Integer.valueOf(chestInfo[0]), Integer.valueOf(chestInfo[1])));
                     chestArrayList.add(chest);

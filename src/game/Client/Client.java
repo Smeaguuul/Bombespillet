@@ -24,7 +24,7 @@ public class Client {
 		//Sender vores navn og åbner gui'en
 		outToServer.writeBytes(navn + '\n');
 		String response = inFromServer.readLine();
-//		System.out.println(response);
+//		System.out.println(response);'
 		Application.launch(Gui.class);
 	}
 };

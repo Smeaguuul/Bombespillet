@@ -135,6 +135,7 @@ public class Gui extends Application {
 	}
 
 	public static void updateGUI(List<Player> players, List<Chest> chests) {
+
 		for (Player player : players) {
 			placePlayerOnScreen(player.getLocation(),player.getDirection());
 		}

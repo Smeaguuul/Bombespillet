@@ -33,10 +33,12 @@ public class ServerGameLogic {
             outString.append("#" + player);
         }
         outString.append("@");
-        for (Chest chest : chests) {
-            outString.append("#" + chest);
+        if (chests.isEmpty()) outString.append(" ");
+        else {
+            for (Chest chest : chests) {
+                outString.append("#" + chest);
+            }
         }
-
         outString.append('\n');
         System.out.println(outString.toString());
         //Sender stringen til alle clients
@@ -93,7 +95,7 @@ public class ServerGameLogic {
         int index = 0;
         boolean found = false;
         Chest chest = null;
-        while (index == 0 && !found) {
+        while (index < chests.size() && !found) {
             if (chests.get(index).getLocation().equals(position)) {
                 chest = chests.get(index);
                 found = true;
