@@ -12,7 +12,7 @@ public static List<Player> players = new ArrayList<Player>();
 	
 	
 	public static void makePlayers(String name) {
-		pair p=getRandomFreePosition();
+		pair p= getRandomFreePosition();
 		me = new Player(name,p,"up");
 		players.add(me);
 		p=getRandomFreePosition();

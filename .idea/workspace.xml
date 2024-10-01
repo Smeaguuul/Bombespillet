@@ -13,6 +13,13 @@
   <component name="CompilerWorkspaceConfiguration">
     <option name="MAKE_PROJECT_ON_SAVE" value="true" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="ProjectColorInfo"><![CDATA[{
   "associatedIndex": 6
 }]]></component>
@@ -40,6 +47,9 @@
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="game" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Seafile\My Library\Intellij Projekter\Serverspillet\src\game\Server" />
       <recent name="C:\Seafile\My Library\Intellij Projekter\Serverspillet\src" />

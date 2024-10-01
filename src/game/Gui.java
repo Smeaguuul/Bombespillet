@@ -2,6 +2,7 @@ package game;
 
 import java.util.*;
 import java.util.List;
+import game.ClientGameLogic.*;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -15,24 +16,25 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.*;
 
+import static game.ClientGameLogic.playerMoved;
+
 public class Gui extends Application {
 
-	public static final int size = 30; 
+	public static final int size = 30;
 	public static final int scene_height = size * 20 + 50;
 	public static final int scene_width = size * 20 + 200;
-
 	public static Image image_floor;
 	public static Image image_wall;
 	public static Image hero_right,hero_left,hero_up,hero_down;
 
-	
+
 
 	private static Label[][] fields;
 	private TextArea scoreList;
-	
 
 
-	
+
+
 	// -------------------------------------------
 	// | Maze: (0,0)              | Score: (1,0) |
 	// |-----------------------------------------|
@@ -43,8 +45,6 @@ public class Gui extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			
-			
 			GridPane grid = new GridPane();
 			grid.setHgap(10);
 			grid.setVgap(10);
@@ -52,12 +52,12 @@ public class Gui extends Application {
 
 			Text mazeLabel = new Text("Maze:");
 			mazeLabel.setFont(Font.font("Arial", FontWeight.BOLD, 20));
-	
+
 			Text scoreLabel = new Text("Score:");
 			scoreLabel.setFont(Font.font("Arial", FontWeight.BOLD, 20));
 
 			scoreList = new TextArea();
-			
+
 			GridPane boardGrid = new GridPane();
 
 			image_wall  = new Image(getClass().getResourceAsStream("Image/wall4.png"),size,size,false,false);
@@ -75,7 +75,7 @@ public class Gui extends Application {
 					case 'w':
 						fields[i][j] = new Label("", new ImageView(image_wall));
 						break;
-					case ' ':					
+					case ' ':
 						fields[i][j] = new Label("", new ImageView(image_floor));
 						break;
 					default: throw new Exception("Illegal field value: "+Generel.board[j].charAt(i) );
@@ -84,13 +84,13 @@ public class Gui extends Application {
 				}
 			}
 			scoreList.setEditable(false);
-			
-			
-			grid.add(mazeLabel,  0, 0); 
-			grid.add(scoreLabel, 1, 0); 
+
+
+			grid.add(mazeLabel,  0, 0);
+			grid.add(scoreLabel, 1, 0);
 			grid.add(boardGrid,  0, 1);
 			grid.add(scoreList,  1, 1);
-						
+
 			Scene scene = new Scene(grid,scene_width,scene_height);
 			primaryStage.setScene(scene);
 			primaryStage.show();
@@ -101,11 +101,11 @@ public class Gui extends Application {
 				case DOWN:  playerMoved(0,+1,"down");  break;
 				case LEFT:  playerMoved(-1,0,"left");  break;
 				case RIGHT: playerMoved(+1,0,"right"); break;
-				case ESCAPE:System.exit(0); 
+				case ESCAPE:System.exit(0);
 				default: break;
 				}
 			});
-			
+
             // Putting default players on screen
 			for (int i=0;i<GameLogic.players.size();i++) {
 			  fields[GameLogic.players.get(i).getXpos()][GameLogic.players.get(i).getYpos()].setGraphic(new ImageView(hero_up));
@@ -115,13 +115,13 @@ public class Gui extends Application {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static void removePlayerOnScreen(pair oldpos) {
 		Platform.runLater(() -> {
 			fields[oldpos.getX()][oldpos.getY()].setGraphic(new ImageView(image_floor));
 			});
 	}
-	
+
 	public static void placePlayerOnScreen(pair newpos,String direction) {
 		Platform.runLater(() -> {
 			int newx = newpos.getX();
@@ -140,26 +140,26 @@ public class Gui extends Application {
 			};
 			});
 	}
-	
-	public static void movePlayerOnScreen(pair oldpos,pair newpos,String direction)
-	{
+
+	//Ændrer så den tager imod spiller
+	public static void movePlayerOnScreen(pair oldpos,pair newpos,String direction) {
 		removePlayerOnScreen(oldpos);
 		placePlayerOnScreen(newpos,direction);
 	}
-	
 
-	
+
+
 	public void updateScoreTable()
 	{
 		Platform.runLater(() -> {
 			scoreList.setText(getScoreList());
 			});
 	}
-	public void playerMoved(int delta_x, int delta_y, String direction) {
-		GameLogic.updatePlayer(delta_x,delta_y,direction);
-		updateScoreTable();
-	}
-	
+//	public void playerMoved(int delta_x, int delta_y, String direction) {
+//		GameLogic.updatePlayer(delta_x,delta_y,direction);
+//		updateScoreTable();
+//	}
+
 	public String getScoreList() {
 		StringBuffer b = new StringBuffer(100);
 		for (Player p : GameLogic.players) {
@@ -170,6 +170,6 @@ public class Gui extends Application {
 
 
 
-	
+
 }
 
