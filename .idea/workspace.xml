@@ -4,7 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1961efe2-8432-46d0-ac40-87d85bbbebdf" name="Changes" comment="" />
+    <list default="true" id="1961efe2-8432-46d0-ac40-87d85bbbebdf" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/ClientGameLogic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/ClientGameLogic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/ClientListenThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/ClientListenThread.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/GameLogic.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Player.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -20,9 +27,12 @@
       </list>
     </option>
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 6
-}]]></component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
   <component name="ProjectId" id="2me1hEO6AbLFR9hkn2On0SAGZKH" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -38,7 +48,9 @@
     "Repository.Attach.Annotations": "false",
     "Repository.Attach.JavaDocs": "false",
     "Repository.Attach.Sources": "false",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
     "last_opened_file_path": "C:/Seafile/My Library/Intellij Pakker/openjfx-23-javadoc/javafx-23-javadoc/javafx.graphics",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
