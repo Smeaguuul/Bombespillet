@@ -16,4 +16,9 @@ public class Chest {
     public pair getLocation() {
         return location;
     }
+
+    @Override
+    public String toString() {
+        return location + "," + points;
+    }
 }

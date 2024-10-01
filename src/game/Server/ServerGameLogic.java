@@ -30,14 +30,11 @@ public class ServerGameLogic {
         outString.append("@");
         for (Player player : players) {
             //Vi smider alt data om spilleren ind i en string. '#' splitter spillere. ',' splitter attributer.
-            outString.append("#" + player.getName() + ",");
-            outString.append(player.getLocation() + ",");
-            outString.append(player.getDirection() + ",");
-            outString.append(player.getPoint());
+            outString.append("#" + player);
         }
         outString.append("@");
         for (Chest chest : chests) {
-            outString.append("#" + chest.getLocation() + "," + chest.getPoints());
+            outString.append("#" + chest);
         }
 
         outString.append('\n');

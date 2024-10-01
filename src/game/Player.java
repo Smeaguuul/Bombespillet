@@ -58,6 +58,6 @@ public class Player {
     }
 
     public String toString() {
-        return name + ":   " + point;
+        return name + "," + location + "," + direction + "," + point;
     }
 }
