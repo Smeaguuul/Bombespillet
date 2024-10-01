@@ -74,7 +74,7 @@ public class ServerGameLogic {
     }
 
     private static boolean isFreeSpot(int x, int y) {
-        return Generel.board[y].charAt(x) != 'W' && getPlayerAt(x, y) == null;
+        return Generel.board[y].charAt(x) != 'w' && getPlayerAt(x, y) == null;
     }
 
     public static Player getPlayerAt(int x, int y) {
