@@ -42,7 +42,7 @@ public class Player {
 	public void addPoints(int p) {
 		point+=p;
 	}
-	public String toString() {
-		return name+":   "+point;
-	}
+	public String getName() {return name;}
+	public int getPoint() {return point;}
+	public String toString() {return name+":   "+point;}
 }

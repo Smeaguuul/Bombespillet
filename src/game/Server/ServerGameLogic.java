@@ -1,25 +1,56 @@
 package game.Server;
 
 import game.Generel;
-import game.Gui;
 import game.Player;
 import game.pair;
 
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 public class ServerGameLogic {
     public static List<Player> players = new ArrayList<Player>();
+    public static List<DataOutputStream> clientConnections = new ArrayList<>();
+
+    public static void addConnecton (DataOutputStream clientConnection){
+        clientConnections.add(clientConnection);
+    }
+
+    public static void sendData () {
+        //Bygger stringen med alt infoen
+        StringBuilder outString = new StringBuilder();
+        for (Player player : players) {
+            //Vi smider alt data om spilleren ind i en string. '#' splitter spillere. ',' splitter attributer.
+            outString.append("#" + player.getName() + ",");
+            outString.append(player.getLocation() + ",");
+            outString.append(player.getDirection() + ",");
+            outString.append(player.getPoint());
+        }
+        outString.append('\n');
+        System.out.println(outString.toString());
+        //Sender stringen til alle clients
+        for (DataOutputStream clientConnection : clientConnections) {
+            try {
+                clientConnection.writeBytes(outString.toString());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
 
     public static Player makePlayers(String name) {
         //Sætter spillere til at spawne i modsatte hjørner
         int playerCount = players.size() + 1;
         int x = (playerCount == 1 || playerCount == 2) ? 18 : 1;
         int y = (playerCount % 2 == 0) ? 1 : 18;
-        pair p = new pair(x, y);//getRandomFreePosition();
+        pair p = new pair(x, y);
+        //Opretter spilleren, og returnere den.
         Player newPlayer = new Player(name, p, "up");
         players.add(newPlayer);
+
+        sendData();
         return newPlayer;
     }
 
@@ -32,19 +63,18 @@ public class ServerGameLogic {
         System.out.println(direction);
 
         // collision detection
-        if (!playerAt(x + delta_x, y + delta_y)) {
-            pair oldpos = player.getLocation();
+        if (isFreeSpot(x + delta_x, y + delta_y)) {
             pair newpos = new pair(x + delta_x, y + delta_y);
-//            Gui.movePlayerOnScreen(oldpos, newpos, direction);
-//            player.setLocation(newpos);
+            player.setLocation(newpos);
             returnBol = true;
         }
 
+        sendData();
         return returnBol;
     }
 
-    private static boolean playerAt(int x, int y) {
-        return getPlayerAt(x, y) == null;
+    private static boolean isFreeSpot(int x, int y) {
+        return Generel.board[y].charAt(x) != 'W' && getPlayerAt(x, y) == null;
     }
 
     public static Player getPlayerAt(int x, int y) {
