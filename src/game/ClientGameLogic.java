@@ -17,8 +17,8 @@ public class ClientGameLogic {
     }
 
     public static void setPlayerList(ArrayList<Player> newPlayerList){
-        Gui.removePlayers(playerList);
-        playerList = newPlayerList;
+        Gui.removePlayers(new ArrayList<>(playerList));
+        playerList = new ArrayList<>(newPlayerList);
         Gui.updateGUI(playerList);
     }
 

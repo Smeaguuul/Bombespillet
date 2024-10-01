@@ -7,7 +7,7 @@ import javafx.application.Application;
 
 public class Client {
 
-	public static void main(String[] args) throws Exception{
+	public static void main(String[] args) throws Exception {
 		BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));
 		System.out.println("Indtast spillernavn");
 		String navn = inFromUser.readLine();
@@ -16,6 +16,7 @@ public class Client {
 		//Opretter forbindelsen til/fra server. Og vidergiver det til logic klassen
 		DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
 		ClientGameLogic.setOutToServer(outToServer);
+
 		BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 		ClientListenThread clientThread = new ClientListenThread(inFromServer);
 		clientThread.start();

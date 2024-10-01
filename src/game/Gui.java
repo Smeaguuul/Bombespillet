@@ -118,7 +118,7 @@ public class Gui extends Application {
 
 	public static void removePlayerOnScreen(pair oldpos) {
 		Platform.runLater(() -> {
-			fields[oldpos.getX()][oldpos.getY()].setGraphic(new ImageView(image_floor));
+            fields[oldpos.getX()][oldpos.getY()].setGraphic(new ImageView(image_floor));
 			});
 	}
 
@@ -132,7 +132,7 @@ public class Gui extends Application {
 		for (Player player : players) {
 			placePlayerOnScreen(player.getLocation(),player.direction);
 		}
-	}
+    }
 
 	public static void placePlayerOnScreen(pair newpos,String direction) {
 		Platform.runLater(() -> {
@@ -159,18 +159,11 @@ public class Gui extends Application {
 		placePlayerOnScreen(newpos,direction);
 	}
 
-
-
-	public void updateScoreTable()
-	{
+	public void updateScoreTable() {
 		Platform.runLater(() -> {
 			scoreList.setText(getScoreList());
 			});
 	}
-//	public void playerMoved(int delta_x, int delta_y, String direction) {
-//		GameLogic.updatePlayer(delta_x,delta_y,direction);
-//		updateScoreTable();
-//	}
 
 	public String getScoreList() {
 		StringBuffer b = new StringBuffer(100);
