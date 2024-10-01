@@ -47,7 +47,7 @@ public class ServerGameLogic {
         int y = (playerCount % 2 == 0) ? 1 : 18;
         pair p = new pair(x, y);
         //Opretter spilleren, og returnere den.
-        Player newPlayer = new Player(name, p, "up");
+        Player newPlayer = new Player(name, p, "up", 0);
         players.add(newPlayer);
 
         sendData();

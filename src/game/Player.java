@@ -13,7 +13,13 @@ public class Player {
         this.point = score;
     }
 
-    ;
+    public String getName() {
+        return name;
+    }
+
+    public int getPoint() {
+        return point;
+    }
 
     public pair getLocation() {
         return this.location;

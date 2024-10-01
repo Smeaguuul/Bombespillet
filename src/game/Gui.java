@@ -107,8 +107,8 @@ public class Gui extends Application {
 			});
 
             // Putting default players on screen
-			for (int i=0;i<GameLogic.players.size();i++) {
-			  fields[GameLogic.players.get(i).getXpos()][GameLogic.players.get(i).getYpos()].setGraphic(new ImageView(hero_up));
+			for (int i=0;i<ClientGameLogic.playerList.size();i++) {
+			  fields[ClientGameLogic.playerList.get(i).getXpos()][ClientGameLogic.playerList.get(i).getYpos()].setGraphic(new ImageView(hero_up));
 			}
 			scoreList.setText(getScoreList());
 		} catch(Exception e) {
@@ -120,6 +120,18 @@ public class Gui extends Application {
 		Platform.runLater(() -> {
 			fields[oldpos.getX()][oldpos.getY()].setGraphic(new ImageView(image_floor));
 			});
+	}
+
+	public static void removePlayers (List<Player> players) {
+		for (Player player : players) {
+			removePlayerOnScreen(player.getLocation());
+		}
+	}
+
+	public static void updateGUI (List<Player> players) {
+		for (Player player : players) {
+			placePlayerOnScreen(player.getLocation(),player.direction);
+		}
 	}
 
 	public static void placePlayerOnScreen(pair newpos,String direction) {
@@ -162,7 +174,7 @@ public class Gui extends Application {
 
 	public String getScoreList() {
 		StringBuffer b = new StringBuffer(100);
-		for (Player p : GameLogic.players) {
+		for (Player p : ClientGameLogic.playerList) {
 			b.append(p+"\r\n");
 		}
 		return b.toString();
