@@ -1,5 +1,6 @@
 package game.Server;
 
+import game.Chest;
 import game.Generel;
 import game.Player;
 import game.pair;
@@ -13,12 +14,17 @@ import java.util.Random;
 public class ServerGameLogic {
     public static List<Player> players = new ArrayList<Player>();
     public static List<DataOutputStream> clientConnections = new ArrayList<>();
+    public static List<Chest> chests = new ArrayList<>();
 
-    public static void addConnection (DataOutputStream clientConnection){
+    public static void addConnection(DataOutputStream clientConnection) {
         clientConnections.add(clientConnection);
     }
 
-    public static void sendData () {
+    public static void addChest(Chest chest) {
+        chests.add(chest);
+    }
+
+    public static void sendData() {
         //Bygger stringen med alt infoen
         StringBuilder outString = new StringBuilder();
         for (Player player : players) {
@@ -54,7 +60,7 @@ public class ServerGameLogic {
         return newPlayer;
     }
 
-
+    //Syncronized??
     public static boolean updatePlayer(Player player, int delta_x, int delta_y, String direction) {
         player.setDirection(direction);
         int x = player.getXpos(), y = player.getYpos();
@@ -67,6 +73,19 @@ public class ServerGameLogic {
             pair newpos = new pair(x + delta_x, y + delta_y);
             player.setLocation(newpos);
             returnBol = true;
+            if (chests.stream().anyMatch(chest -> chest.getLocation().equals(newpos))) {
+                int index = 0;
+                boolean found = false;
+                while (index == 0 && !found) {
+                    Chest chest;
+                    if (chests.get(index).getLocation().equals(newpos)) {
+                        chest = chests.get(index);
+                        player.addPoints(chest.getPoints());
+                        found = true;
+                    }
+                    index++;
+                }
+            }
         }
 
         sendData();

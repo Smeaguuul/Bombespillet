@@ -24,4 +24,8 @@ public class pair {
 	public String toString() {
 		return x + "," + y;
 	}
+
+	public boolean equals(pair pair) {
+		return pair.y == y && pair.x == x;
+	}
 }

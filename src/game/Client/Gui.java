@@ -1,9 +1,10 @@
-package game;
+package game.Client;
 
-import java.util.*;
 import java.util.List;
-import game.ClientGameLogic.*;
 
+import game.Generel;
+import game.Player;
+import game.pair;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -13,10 +14,9 @@ import javafx.scene.control.*;
 import javafx.scene.image.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
 import javafx.scene.text.*;
 
-import static game.ClientGameLogic.playerMoved;
+import static game.Client.ClientGameLogic.playerMoved;
 
 public class Gui extends Application {
 
@@ -30,7 +30,7 @@ public class Gui extends Application {
 
 
 	private static Label[][] fields;
-	private TextArea scoreList;
+	private static TextArea scoreList;
 
 
 
@@ -128,10 +128,11 @@ public class Gui extends Application {
 		}
 	}
 
-	public static void updateGUI (List<Player> players) {
+	public static void updateGUI(List<Player> players) {
 		for (Player player : players) {
-			placePlayerOnScreen(player.getLocation(),player.direction);
+			placePlayerOnScreen(player.getLocation(),player.getDirection());
 		}
+        updateScoreTable();
     }
 
 	public static void placePlayerOnScreen(pair newpos,String direction) {
@@ -159,13 +160,13 @@ public class Gui extends Application {
 		placePlayerOnScreen(newpos,direction);
 	}
 
-	public void updateScoreTable() {
+	public static void updateScoreTable() {
 		Platform.runLater(() -> {
 			scoreList.setText(getScoreList());
 			});
 	}
 
-	public String getScoreList() {
+	public static String getScoreList() {
 		StringBuffer b = new StringBuffer(100);
 		for (Player p : ClientGameLogic.playerList) {
 			b.append(p+"\r\n");

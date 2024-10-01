@@ -1,4 +1,4 @@
-package game;
+package game.Client;
 
 import java.io.*;
 import java.net.Socket;

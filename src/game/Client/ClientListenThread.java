@@ -1,7 +1,9 @@
-package game;
+package game.Client;
+
+import game.Player;
+import game.pair;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class ClientListenThread extends Thread {

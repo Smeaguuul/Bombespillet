@@ -1,4 +1,6 @@
-package game;
+package game.Client;
+
+import game.Player;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
