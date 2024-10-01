@@ -17,12 +17,12 @@ public class ServerThread extends Thread{
 		try {
 			BufferedReader inFromClient = new BufferedReader(new InputStreamReader(connSocket.getInputStream()));
 			DataOutputStream outToClient = new DataOutputStream(connSocket.getOutputStream());
+			ServerGameLogic.addConnection(outToClient);
 
 			// Do the work and the communication with the client here
 			// The following two lines are only an example
 			String clientNavn = inFromClient.readLine();
 			Player client = ServerGameLogic.makePlayers(clientNavn);
-			outToClient.writeBytes("Velkommen" +  '\n' );
 			System.out.println(clientNavn);
 
 			while (true) {

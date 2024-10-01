@@ -14,7 +14,7 @@ public class ServerGameLogic {
     public static List<Player> players = new ArrayList<Player>();
     public static List<DataOutputStream> clientConnections = new ArrayList<>();
 
-    public static void addConnecton (DataOutputStream clientConnection){
+    public static void addConnection (DataOutputStream clientConnection){
         clientConnections.add(clientConnection);
     }
 
