@@ -1,5 +1,6 @@
 package game.Client;
 
+import game.Chest;
 import game.Player;
 
 import java.io.BufferedReader;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 public class ClientGameLogic {
     private static DataOutputStream outToServer;
     public static ArrayList<Player> playerList = new ArrayList<Player>();
+    public static ArrayList<Chest> chestArrayList = new ArrayList<>();
     private static BufferedReader bufferedReader;
 
     private static ClientListenThread clientListenThread = new ClientListenThread(bufferedReader);
@@ -18,10 +20,14 @@ public class ClientGameLogic {
         ClientGameLogic.outToServer = outToServer;
     }
 
-    public static void setPlayerList(ArrayList<Player> newPlayerList){
+    public static void setPlayerList(ArrayList<Player> newPlayerList, ArrayList<Chest> newChestArrayList){
         Gui.removePlayers(new ArrayList<>(playerList));
         playerList = new ArrayList<>(newPlayerList);
-        Gui.updateGUI(playerList);
+
+        Gui.removeChests(new ArrayList<>(chestArrayList));
+        chestArrayList = new ArrayList<>(newChestArrayList);
+
+        Gui.updateGUI(playerList, chestArrayList);
     }
 
     public static void playerMoved(int delta_x, int delta_y, String direction) {

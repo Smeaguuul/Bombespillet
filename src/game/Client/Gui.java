@@ -2,6 +2,7 @@ package game.Client;
 
 import java.util.List;
 
+import game.Chest;
 import game.Generel;
 import game.Player;
 import game.pair;
@@ -26,13 +27,12 @@ public class Gui extends Application {
 	public static Image image_floor;
 	public static Image image_wall;
 	public static Image hero_right,hero_left,hero_up,hero_down;
+	private static Image chest;
 
 
 
 	private static Label[][] fields;
 	private static TextArea scoreList;
-
-
 
 
 	// -------------------------------------------
@@ -67,6 +67,7 @@ public class Gui extends Application {
 			hero_left   = new Image(getClass().getResourceAsStream("Image/heroLeft.png"),size,size,false,false);
 			hero_up     = new Image(getClass().getResourceAsStream("Image/heroUp.png"),size,size,false,false);
 			hero_down   = new Image(getClass().getResourceAsStream("Image/heroDown.png"),size,size,false,false);
+			chest		= new Image(getClass().getResourceAsStream("Image/chest.png"),size,size,false,false);
 
 			fields = new Label[20][20];
 			for (int j=0; j<20; j++) {
@@ -116,7 +117,7 @@ public class Gui extends Application {
 		}
 	}
 
-	public static void removePlayerOnScreen(pair oldpos) {
+	public static void removeObjectOnScreen(pair oldpos) {
 		Platform.runLater(() -> {
             fields[oldpos.getX()][oldpos.getY()].setGraphic(new ImageView(image_floor));
 			});
@@ -124,16 +125,32 @@ public class Gui extends Application {
 
 	public static void removePlayers (List<Player> players) {
 		for (Player player : players) {
-			removePlayerOnScreen(player.getLocation());
+			removeObjectOnScreen(player.getLocation());
+		}
+	}
+	public static void removeChests (List<Chest> chests){
+		for (Chest chest : chests) {
+			removeObjectOnScreen(chest.getLocation());
 		}
 	}
 
-	public static void updateGUI(List<Player> players) {
+	public static void updateGUI(List<Player> players, List<Chest> chests) {
 		for (Player player : players) {
 			placePlayerOnScreen(player.getLocation(),player.getDirection());
 		}
+		for (Chest chest : chests) {
+			placeChestOnScreen(chest.getLocation());
+		}
         updateScoreTable();
     }
+
+	private static void placeChestOnScreen(pair location) {
+		Platform.runLater(() -> {
+			int x = location.getX();
+			int y = location.getY();
+			fields[x][y].setGraphic(new ImageView(chest));
+		});
+	}
 
 	public static void placePlayerOnScreen(pair newpos,String direction) {
 		Platform.runLater(() -> {
@@ -156,7 +173,7 @@ public class Gui extends Application {
 
 	//Ændrer så den tager imod spiller
 	public static void movePlayerOnScreen(pair oldpos,pair newpos,String direction) {
-		removePlayerOnScreen(oldpos);
+		removeObjectOnScreen(oldpos);
 		placePlayerOnScreen(newpos,direction);
 	}
 
