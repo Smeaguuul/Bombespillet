@@ -11,7 +11,7 @@ public class Client {
 		BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));
 		System.out.println("Indtast spillernavn");
 		String navn = inFromUser.readLine();
-		Socket clientSocket= new Socket("localhost",42069);
+		Socket clientSocket= new Socket("10.10.139.222",42069);
 
 		//Opretter forbindelsen til/fra server. Og vidergiver det til logic klassen
 		DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
