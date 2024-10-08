@@ -29,4 +29,8 @@ public class Bomb implements Item {
     public String getType() {
         return "bomb";
     }
+
+    public LocalTime getPlaced() {
+        return placed;
+    }
 }

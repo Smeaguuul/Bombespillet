@@ -12,4 +12,8 @@ public class Explosion implements Item {
     public String getType() {
         return "explosion";
     }
+
+    public Explosion(Pair location) {
+        this.location = location;
+    }
 }

@@ -13,6 +13,7 @@ public class ServerGameLogic {
     public static List<DataOutputStream> clientConnections = new ArrayList<>();
     public static List<Chest> chests = new ArrayList<>();
     public static List<Bomb> bombs = new ArrayList<>();
+    public static List<Explosion> explosions = new ArrayList<>();
 
     public static void addConnection(DataOutputStream clientConnection) {
         clientConnections.add(clientConnection);
@@ -72,16 +73,27 @@ public class ServerGameLogic {
         return newPlayer;
     }
 
-    public static boolean placeBomb (Player player) {
+    public static boolean placeBomb(Player player) {
         Pair playerLocation = player.getLocation();
         String direction = player.getDirection();
         Pair bombLocation = null;
         System.out.println(direction);
         switch (direction.toUpperCase()) {
-            case "UP":    bombLocation = new Pair(playerLocation.getX() + 0,playerLocation.getY()-1);   break;
-            case "DOWN":  bombLocation = new Pair(playerLocation.getX() + 0,playerLocation.getY()+1);;  break;
-            case "LEFT":  bombLocation = new Pair(playerLocation.getX() - 1,playerLocation.getY());;  break;
-            case "RIGHT": bombLocation = new Pair(playerLocation.getX() + 1,playerLocation.getY());; break;
+            case "UP":
+                bombLocation = new Pair(playerLocation.getX() + 0, playerLocation.getY() - 1);
+                break;
+            case "DOWN":
+                bombLocation = new Pair(playerLocation.getX() + 0, playerLocation.getY() + 1);
+                ;
+                break;
+            case "LEFT":
+                bombLocation = new Pair(playerLocation.getX() - 1, playerLocation.getY());
+                ;
+                break;
+            case "RIGHT":
+                bombLocation = new Pair(playerLocation.getX() + 1, playerLocation.getY());
+                ;
+                break;
         }
 
         if (!isFreeSpot(bombLocation.getX(), bombLocation.getY())) {
@@ -90,10 +102,11 @@ public class ServerGameLogic {
 
         Bomb bomb = new Bomb(bombLocation);
         bombs.add(bomb);
+        BombThread bombThread = new BombThread(bomb);
+        bombThread.start();
         sendData();
         return true;
     }
-
 
     //Syncronized??
     public static boolean updatePlayer(Player player, int delta_x, int delta_y, String direction) {
@@ -172,5 +185,43 @@ public class ServerGameLogic {
         }
         Pair p = new Pair(x, y);
         return p;
+    }
+
+    public static void bombExploded(Pair pair) {
+        int x = pair.getX();
+        int y = pair.getY();
+        boolean hit = false;
+        int i = x - 1;
+        explosions.add(new Explosion(pair));
+        while (!hit && i >= x - 3) {
+            if (isFreeSpot(i, y)) {
+                explosions.add(new Explosion(new Pair(i, y)));
+                i--;
+            } else hit = true;
+        }
+        hit = false;
+        i = x + 1;
+        while (!hit && i <= x + 3) {
+            if (isFreeSpot(i, y)) {
+                explosions.add(new Explosion(new Pair(i, y)));
+                i++;
+            } else hit = true;
+        }
+        hit = false;
+        i = y - 1;
+        while (!hit && i >= y - 3) {
+            if (isFreeSpot(i, y)) {
+                explosions.add(new Explosion(new Pair(i, y)));
+                i--;
+            } else hit = true;
+        }
+        hit = false;
+        i = y + 1;
+        while (!hit && i <= y + 3) {
+            if (isFreeSpot(i, y)) {
+                explosions.add(new Explosion(new Pair(i, y)));
+                i--;
+            } else hit = true;
+        }
     }
 }
