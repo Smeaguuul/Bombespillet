@@ -20,6 +20,7 @@ public class BombThread extends Thread{
     public void run() {
         if (bomb.getPlaced().until(LocalTime.now(), SECONDS) >= 5){
             ServerGameLogic.bombExploded(bomb.getLocation());
+
         }
     }
 }

@@ -47,6 +47,13 @@ public class ServerGameLogic {
                 outString.append("#" + bomb);
             }
         }
+        outString.append("@");
+        if (explosions.isEmpty()) outString.append(" ");
+        else {
+            for (Explosion explosion : explosions) {
+                outString.append("#" + explosion);
+            }
+        }
         outString.append('\n');
         System.out.println(outString.toString());
         //Sender stringen til alle clients
