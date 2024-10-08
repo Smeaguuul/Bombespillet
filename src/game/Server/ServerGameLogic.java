@@ -5,7 +5,6 @@ import game.*;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -196,16 +195,21 @@ public class ServerGameLogic {
         return p;
     }
 
-    public static void bombExploded(Pair pair) {
+    public static void bombExploded(Bomb bomb) {
+        bombs.remove(bomb);
         ArrayList<Explosion> localExplosions = new ArrayList<>();
+        Pair pair = bomb.getLocation();
         int x = pair.getX();
         int y = pair.getY();
         boolean hit = false;
         int i = x - 1;
-        explosions.add(new Explosion(pair));
+        Explosion explosion = new Explosion(pair);
+        explosions.add(explosion);
+        localExplosions.add(explosion);
+
         while (!hit && i >= x - 3) {
             if (isFreeSpot(i, y)) {
-                Explosion explosion = new Explosion(new Pair(i,y));
+                explosion = new Explosion(new Pair(i,y));
                 explosions.add(explosion);
                 localExplosions.add(explosion);
                 i--;
@@ -215,7 +219,7 @@ public class ServerGameLogic {
         i = x + 1;
         while (!hit && i <= x + 3) {
             if (isFreeSpot(i, y)) {
-                Explosion explosion = new Explosion(new Pair(i,y));
+                explosion = new Explosion(new Pair(i,y));
                 explosions.add(explosion);
                 localExplosions.add(explosion);
                 i++;
@@ -225,7 +229,7 @@ public class ServerGameLogic {
         i = y - 1;
         while (!hit && i >= y - 3) {
             if (isFreeSpot(x, i)) {
-                Explosion explosion = new Explosion(new Pair(x,i));
+                explosion = new Explosion(new Pair(x,i));
                 explosions.add(explosion);
                 localExplosions.add(explosion);
                 i--;
@@ -235,7 +239,7 @@ public class ServerGameLogic {
         i = y + 1;
         while (!hit && i <= y + 3) {
             if (isFreeSpot(x, i)) {
-                Explosion explosion = new Explosion(new Pair(x,i));
+                explosion = new Explosion(new Pair(x,i));
                 explosions.add(explosion);
                 localExplosions.add(explosion);
                 i++;

@@ -59,6 +59,10 @@ public class ClientListenThread extends Thread {
                     explosionArrayList.add(explosion);
                 }
                 ClientGameLogic.setObjectLists(playerArrayList, chestArrayList, bombArrayList, explosionArrayList);
+                playerArrayList = new ArrayList<>();
+                chestArrayList = new ArrayList<>();
+                bombArrayList = new ArrayList<>();
+                explosionArrayList = new ArrayList<>();
             }
         } catch (Exception e) {
             throw new RuntimeException(e);

@@ -21,7 +21,7 @@ public class BombThread extends Thread {
         boolean exploded = false;
         while (!exploded) {
             if (bomb.getPlaced().until(LocalTime.now(), SECONDS) >= 5) {
-                ServerGameLogic.bombExploded(bomb.getLocation());
+                ServerGameLogic.bombExploded(bomb);
                 exploded = true;
             }
             try {
