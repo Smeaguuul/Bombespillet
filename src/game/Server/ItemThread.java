@@ -2,6 +2,8 @@ package game.Server;
 
 import game.Chest;
 
+import static game.Server.ServerGameLogic.sendData;
+
 public class ItemThread extends Thread {
     public ItemThread() {
     }
@@ -15,6 +17,7 @@ public class ItemThread extends Thread {
                 if (Math.random() > 0.5) {
                     Chest chest = new Chest(ServerGameLogic.getRandomFreePosition());
                     ServerGameLogic.addChest(chest);
+                    sendData();
                 }
             }
         } catch (InterruptedException e) {

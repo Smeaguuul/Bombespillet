@@ -91,6 +91,7 @@ public class ServerGameLogic {
 
         Bomb bomb = new Bomb(bombLocation);
         bombs.add(bomb);
+        sendData();
         return true;
     }
 
