@@ -1,11 +1,9 @@
 package game.Client;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import game.Chest;
-import game.Generel;
-import game.Player;
-import game.pair;
+import game.*;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -17,6 +15,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.*;
 
+import static game.Client.ClientGameLogic.placeBomb;
 import static game.Client.ClientGameLogic.playerMoved;
 
 public class Gui extends Application {
@@ -28,11 +27,13 @@ public class Gui extends Application {
 	public static Image image_wall;
 	public static Image hero_right,hero_left,hero_up,hero_down;
 	private static Image chest;
+	private static Image bomb;
 
 
 
 	private static Label[][] fields;
 	private static TextArea scoreList;
+
 
 
 	// -------------------------------------------
@@ -68,6 +69,7 @@ public class Gui extends Application {
 			hero_up     = new Image(getClass().getResourceAsStream("Image/heroUp.png"),size,size,false,false);
 			hero_down   = new Image(getClass().getResourceAsStream("Image/heroDown.png"),size,size,false,false);
 			chest		= new Image(getClass().getResourceAsStream("Image/chest.png"),size,size,false,false);
+			bomb		= new Image(getClass().getResourceAsStream("Image/bomb.png"),size,size,false,false);
 
 			fields = new Label[20][20];
 			for (int j=0; j<20; j++) {
@@ -102,6 +104,7 @@ public class Gui extends Application {
 				case DOWN:  playerMoved(0,+1,"down");  break;
 				case LEFT:  playerMoved(-1,0,"left");  break;
 				case RIGHT: playerMoved(+1,0,"right"); break;
+				case SPACE: placeBomb(); break;
 				case ESCAPE:System.exit(0);
 				default: break;
 				}
@@ -134,7 +137,13 @@ public class Gui extends Application {
 		}
 	}
 
-	public static void updateGUI(List<Player> players, List<Chest> chests) {
+	public static void removeBombs(ArrayList<Bomb> bombs) {
+		for (Bomb bomb : bombs) {
+			removeObjectOnScreen(bomb.getLocation());
+		}
+	}
+
+	public static void updateGUI(List<Player> players, List<Chest> chests, List<Bomb> bombs) {
 
 		for (Player player : players) {
 			placePlayerOnScreen(player.getLocation(),player.getDirection());
@@ -142,8 +151,19 @@ public class Gui extends Application {
 		for (Chest chest : chests) {
 			placeChestOnScreen(chest.getLocation());
 		}
+		for (Bomb bomb : bombs) {
+			placeBombOnScreen(bomb.getLocation());
+		}
         updateScoreTable();
     }
+
+	private static void placeBombOnScreen(pair location) {
+		Platform.runLater(() -> {
+			int x = location.getX();
+			int y = location.getY();
+			fields[x][y].setGraphic(new ImageView(bomb));
+		});
+	}
 
 	private static void placeChestOnScreen(pair location) {
 		Platform.runLater(() -> {

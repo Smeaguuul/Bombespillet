@@ -1,9 +1,6 @@
 package game.Server;
 
-import game.Chest;
-import game.Generel;
-import game.Player;
-import game.pair;
+import game.*;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -16,7 +13,7 @@ public class ServerGameLogic {
     public static List<Player> players = new ArrayList<Player>();
     public static List<DataOutputStream> clientConnections = new ArrayList<>();
     public static List<Chest> chests = new ArrayList<>();
-    private static LocalTime lastSent;
+    public static List<Bomb> bombs = new ArrayList<>();
 
     public static void addConnection(DataOutputStream clientConnection) {
         clientConnections.add(clientConnection);
@@ -35,10 +32,19 @@ public class ServerGameLogic {
             outString.append("#" + player);
         }
         outString.append("@");
+        System.out.println(chests);
         if (chests.isEmpty()) outString.append(" ");
         else {
             for (Chest chest : chests) {
                 outString.append("#" + chest);
+            }
+        }
+
+        outString.append("@");
+        if (bombs.isEmpty()) outString.append(" ");
+        else {
+            for (Bomb bomb : bombs) {
+                outString.append("#" + bomb);
             }
         }
         outString.append('\n');
@@ -66,6 +72,28 @@ public class ServerGameLogic {
         sendData();
         return newPlayer;
     }
+
+    public static boolean placeBomb (Player player) {
+        pair playerLocation = player.getLocation();
+        String direction = player.getDirection();
+        pair bombLocation = null;
+        System.out.println(direction);
+        switch (direction.toUpperCase()) {
+            case "UP":    bombLocation = new pair(playerLocation.getX() + 0,playerLocation.getY()-1);   break;
+            case "DOWN":  bombLocation = new pair(playerLocation.getX() + 0,playerLocation.getY()+1);;  break;
+            case "LEFT":  bombLocation = new pair(playerLocation.getX() - 1,playerLocation.getY());;  break;
+            case "RIGHT": bombLocation = new pair(playerLocation.getX() + 1,playerLocation.getY());; break;
+        }
+
+        if (!isFreeSpot(bombLocation.getX(), bombLocation.getY())) {
+            return false;
+        }
+
+        Bomb bomb = new Bomb(bombLocation);
+        bombs.add(bomb);
+        return true;
+    }
+
 
     //Syncronized??
     public static boolean updatePlayer(Player player, int delta_x, int delta_y, String direction) {

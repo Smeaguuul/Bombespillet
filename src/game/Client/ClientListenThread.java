@@ -1,10 +1,9 @@
 package game.Client;
 
-import game.Chest;
-import game.Player;
-import game.pair;
+import game.*;
 
 import java.io.BufferedReader;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class ClientListenThread extends Thread {
@@ -12,6 +11,7 @@ public class ClientListenThread extends Thread {
     private String stringFromServer;
     private ArrayList<Player> playerArrayList = new ArrayList<>();
     private ArrayList<Chest> chestArrayList = new ArrayList<>();
+    private ArrayList<Bomb> bombArrayList = new ArrayList<>();
 
     public ClientListenThread(BufferedReader infromServer) {
         this.inFromServer = infromServer;
@@ -42,7 +42,14 @@ public class ClientListenThread extends Thread {
                     chestArrayList.add(chest);
                 }
 
-                ClientGameLogic.setPlayerList(playerArrayList, chestArrayList);
+                // Bomb list
+                String[] bombStrings = stringObjekter[3].split("#");
+                for (int i = 1; i < bombStrings.length; i++) {
+                    String[] bombInfo = bombStrings[i].split(",");
+                    Bomb bomb = new Bomb(new pair(Integer.valueOf(bombInfo[0]), Integer.valueOf(bombInfo[1])), LocalTime.parse(bombInfo[2]));
+                    bombArrayList.add(bomb);
+                }
+                ClientGameLogic.setObjectLists(playerArrayList, chestArrayList, bombArrayList);
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -52,5 +59,6 @@ public class ClientListenThread extends Thread {
     public void clearObjects(){
         playerArrayList.clear();
         chestArrayList.clear();
+        bombArrayList.clear();
     }
 }

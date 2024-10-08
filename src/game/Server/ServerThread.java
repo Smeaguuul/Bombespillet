@@ -5,8 +5,7 @@ import game.Player;
 import java.net.*;
 import java.io.*;
 
-import static game.Server.ServerGameLogic.sendData;
-import static game.Server.ServerGameLogic.updatePlayer;
+import static game.Server.ServerGameLogic.*;
 
 public class ServerThread extends Thread{
 	Socket connSocket;
@@ -43,6 +42,7 @@ public class ServerThread extends Thread{
 			case "DOWN":  updatePlayer(client,0,+1,"down");  break;
 			case "LEFT":  updatePlayer(client,-1,0,"left");  break;
 			case "RIGHT": updatePlayer(client,+1,0,"right"); break;
+			case "BOMB": placeBomb(client); break;
 			default: break;
 		}
 	}
