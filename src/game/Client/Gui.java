@@ -135,8 +135,8 @@ public class Gui extends Application {
     }
 
     public static void removeItems(ArrayList<Item> Items) {
-        for (Item location : Items) {
-            removeObjectOnScreen(location.getLocation());
+        for (Item item : Items) {
+            removeObjectOnScreen(item.getLocation());
         }
     }
 
@@ -145,7 +145,7 @@ public class Gui extends Application {
             placeItemOnScreen(item);
         }
         updateScoreTable();
-    }
+}
 
     private static void placeItemOnScreen(Item item) {
         Platform.runLater(() -> {

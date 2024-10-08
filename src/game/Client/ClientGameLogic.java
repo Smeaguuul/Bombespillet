@@ -25,17 +25,22 @@ public class ClientGameLogic {
     }
 
     public static void setObjectLists(ArrayList<Player> newPlayerList, ArrayList<Chest> newChestArrayList, ArrayList<Bomb> newBombArrayList){
+        //Remove items
         ArrayList<Item> items = new ArrayList<>();
         items.addAll(playerList);
         items.addAll(chestArrayList);
         items.addAll(bombArrayList);
-
         Gui.removeItems(items);
+
+        //Place items
         playerList = new ArrayList<>(newPlayerList);
         chestArrayList = new ArrayList<>(newChestArrayList);
         bombArrayList = new ArrayList<>(newBombArrayList);
-
-        Gui.updateGUI(items);
+        ArrayList<Item> newLists = new ArrayList<>();
+        newLists.addAll(playerList);
+        newLists.addAll(chestArrayList);
+        newLists.addAll(bombArrayList);
+        Gui.updateGUI(newLists);
     }
 
     public static void placeBomb () {
