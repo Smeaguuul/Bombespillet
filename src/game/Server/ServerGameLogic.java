@@ -197,6 +197,7 @@ public class ServerGameLogic {
     }
 
     public static void bombExploded(Pair pair) {
+        ArrayList<Explosion> localExplosions = new ArrayList<>();
         int x = pair.getX();
         int y = pair.getY();
         boolean hit = false;
@@ -204,7 +205,9 @@ public class ServerGameLogic {
         explosions.add(new Explosion(pair));
         while (!hit && i >= x - 3) {
             if (isFreeSpot(i, y)) {
-                explosions.add(new Explosion(new Pair(i, y)));
+                Explosion explosion = new Explosion(new Pair(i,y));
+                explosions.add(explosion);
+                localExplosions.add(explosion);
                 i--;
             } else hit = true;
         }
@@ -212,7 +215,9 @@ public class ServerGameLogic {
         i = x + 1;
         while (!hit && i <= x + 3) {
             if (isFreeSpot(i, y)) {
-                explosions.add(new Explosion(new Pair(i, y)));
+                Explosion explosion = new Explosion(new Pair(i,y));
+                explosions.add(explosion);
+                localExplosions.add(explosion);
                 i++;
             } else hit = true;
         }
@@ -220,7 +225,9 @@ public class ServerGameLogic {
         i = y - 1;
         while (!hit && i >= y - 3) {
             if (isFreeSpot(x, i)) {
-                explosions.add(new Explosion(new Pair(x, i)));
+                Explosion explosion = new Explosion(new Pair(x,i));
+                explosions.add(explosion);
+                localExplosions.add(explosion);
                 i--;
             } else hit = true;
         }
@@ -228,9 +235,17 @@ public class ServerGameLogic {
         i = y + 1;
         while (!hit && i <= y + 3) {
             if (isFreeSpot(x, i)) {
-                explosions.add(new Explosion(new Pair(x, i)));
+                Explosion explosion = new Explosion(new Pair(x,i));
+                explosions.add(explosion);
+                localExplosions.add(explosion);
                 i++;
             } else hit = true;
         }
+        RemoveExplosionThread removeExplosionThread = new RemoveExplosionThread(localExplosions);
+        removeExplosionThread.start();
+    }
+
+    public static void removeExplosions(ArrayList<Explosion> localExplosions){
+        explosions.removeAll(localExplosions);
     }
 }

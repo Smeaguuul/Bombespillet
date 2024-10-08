@@ -24,6 +24,11 @@ public class BombThread extends Thread {
                 ServerGameLogic.bombExploded(bomb.getLocation());
                 exploded = true;
             }
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }

@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1961efe2-8432-46d0-ac40-87d85bbbebdf" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/game/Server/RemoveExplosionThread.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/Server/BombThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Server/BombThread.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/Server/ServerGameLogic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Server/ServerGameLogic.java" afterDir="false" />
