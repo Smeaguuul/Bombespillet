@@ -126,20 +126,9 @@ public class Gui extends Application {
 			});
 	}
 
-	public static void removePlayers (List<Player> players) {
-		for (Player player : players) {
-			removeObjectOnScreen(player.getLocation());
-		}
-	}
-	public static void removeChests (List<Chest> chests){
-		for (Chest chest : chests) {
-			removeObjectOnScreen(chest.getLocation());
-		}
-	}
-
-	public static void removeBombs(ArrayList<Bomb> bombs) {
-		for (Bomb bomb : bombs) {
-			removeObjectOnScreen(bomb.getLocation());
+	public static void removeItems(ArrayList<getLocation> getLocations) {
+		for (getLocation location : getLocations) {
+			removeObjectOnScreen(location.getLocation());
 		}
 	}
 

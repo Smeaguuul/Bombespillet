@@ -2,7 +2,7 @@ package game;
 
 import java.time.LocalTime;
 
-public class Bomb {
+public class Bomb implements getLocation {
     private pair location;
     private LocalTime placed;
 

@@ -1,6 +1,6 @@
 package game;
 
-public class Player {
+public class Player implements getLocation {
     String name;
     pair location;
     int point;

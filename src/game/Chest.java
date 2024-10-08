@@ -1,6 +1,6 @@
 package game;
 
-public class Chest {
+public class Chest implements getLocation {
     int points;
     pair location;
 
