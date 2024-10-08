@@ -12,6 +12,7 @@ public class ClientListenThread extends Thread {
     private ArrayList<Player> playerArrayList = new ArrayList<>();
     private ArrayList<Chest> chestArrayList = new ArrayList<>();
     private ArrayList<Bomb> bombArrayList = new ArrayList<>();
+    private ArrayList<Explosion> explosionArrayList = new ArrayList<>();
 
     public ClientListenThread(BufferedReader infromServer) {
         this.inFromServer = infromServer;
@@ -49,7 +50,15 @@ public class ClientListenThread extends Thread {
                     Bomb bomb = new Bomb(new Pair(Integer.valueOf(bombInfo[0]), Integer.valueOf(bombInfo[1])), LocalTime.parse(bombInfo[2]));
                     bombArrayList.add(bomb);
                 }
-                ClientGameLogic.setObjectLists(playerArrayList, chestArrayList, bombArrayList);
+
+                // Explosion list
+                String[] explosionStrings = stringObjekter[4].split("#");
+                for (int i = 1; i < bombStrings.length; i++) {
+                    String[] explosionInfo = explosionStrings[i].split(",");
+                    Explosion explosion = new Explosion(new Pair(Integer.valueOf(explosionInfo[0]), Integer.valueOf(explosionInfo[1])));
+                    explosionArrayList.add(explosion);
+                }
+                ClientGameLogic.setObjectLists(playerArrayList, chestArrayList, bombArrayList, explosionArrayList);
             }
         } catch (Exception e) {
             throw new RuntimeException(e);

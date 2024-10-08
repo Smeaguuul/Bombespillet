@@ -1,9 +1,6 @@
 package game.Client;
 
-import game.Bomb;
-import game.Chest;
-import game.Player;
-import game.Item;
+import game.*;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -15,6 +12,7 @@ public class ClientGameLogic {
     public static ArrayList<Player> playerList = new ArrayList<Player>();
     public static ArrayList<Chest> chestArrayList = new ArrayList<>();
     public static ArrayList<Bomb> bombArrayList = new ArrayList<>();
+    public static ArrayList<Explosion> explosionArrayList = new ArrayList<>();
     private static BufferedReader bufferedReader;
 
 
@@ -24,22 +22,25 @@ public class ClientGameLogic {
         ClientGameLogic.outToServer = outToServer;
     }
 
-    public static void setObjectLists(ArrayList<Player> newPlayerList, ArrayList<Chest> newChestArrayList, ArrayList<Bomb> newBombArrayList){
+    public static void setObjectLists(ArrayList<Player> newPlayerList, ArrayList<Chest> newChestArrayList, ArrayList<Bomb> newBombArrayList, ArrayList<Explosion> newExplosionArrayList){
         //Remove items
         ArrayList<Item> items = new ArrayList<>();
         items.addAll(playerList);
         items.addAll(chestArrayList);
         items.addAll(bombArrayList);
+        items.addAll(explosionArrayList);
         Gui.removeItems(items);
 
         //Place items
         playerList = new ArrayList<>(newPlayerList);
         chestArrayList = new ArrayList<>(newChestArrayList);
         bombArrayList = new ArrayList<>(newBombArrayList);
+        explosionArrayList = new ArrayList<>(newExplosionArrayList);
         ArrayList<Item> newLists = new ArrayList<>();
         newLists.addAll(playerList);
         newLists.addAll(chestArrayList);
         newLists.addAll(bombArrayList);
+        newLists.addAll(explosionArrayList);
         Gui.updateGUI(newLists);
     }
 
