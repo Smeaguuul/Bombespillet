@@ -53,7 +53,7 @@ public class ClientListenThread extends Thread {
 
                 // Explosion list
                 String[] explosionStrings = stringObjekter[4].split("#");
-                for (int i = 1; i < bombStrings.length; i++) {
+                for (int i = 1; i < explosionStrings.length; i++) {
                     String[] explosionInfo = explosionStrings[i].split(",");
                     Explosion explosion = new Explosion(new Pair(Integer.valueOf(explosionInfo[0]), Integer.valueOf(explosionInfo[1])));
                     explosionArrayList.add(explosion);

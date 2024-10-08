@@ -8,7 +8,7 @@ import java.util.Date;
 
 import static java.time.temporal.ChronoUnit.SECONDS;
 
-public class BombThread extends Thread{
+public class BombThread extends Thread {
 
     private Bomb bomb;
 
@@ -18,9 +18,10 @@ public class BombThread extends Thread{
 
     @Override
     public void run() {
-        if (bomb.getPlaced().until(LocalTime.now(), SECONDS) >= 5){
-            ServerGameLogic.bombExploded(bomb.getLocation());
-
+        while (true) {
+            if (bomb.getPlaced().until(LocalTime.now(), SECONDS) >= 5) {
+                ServerGameLogic.bombExploded(bomb.getLocation());
+            }
         }
     }
 }

@@ -5,15 +5,17 @@ import game.*;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class ServerGameLogic {
     public static List<Player> players = new ArrayList<Player>();
     public static List<DataOutputStream> clientConnections = new ArrayList<>();
     public static List<Chest> chests = new ArrayList<>();
     public static List<Bomb> bombs = new ArrayList<>();
-    public static List<Explosion> explosions = new ArrayList<>();
+    public static List<Explosion> explosions = new CopyOnWriteArrayList(new ArrayList<Explosion>());
 
     public static void addConnection(DataOutputStream clientConnection) {
         clientConnections.add(clientConnection);

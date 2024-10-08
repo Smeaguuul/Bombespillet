@@ -16,4 +16,9 @@ public class Explosion implements Item {
     public Explosion(Pair location) {
         this.location = location;
     }
+
+    @Override
+    public String toString() {
+        return location + "";
+    }
 }
