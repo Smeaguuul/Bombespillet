@@ -4,7 +4,6 @@ import game.*;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -64,7 +63,7 @@ public class ServerGameLogic {
         int playerCount = players.size() + 1;
         int x = (playerCount == 1 || playerCount == 2) ? 18 : 1;
         int y = (playerCount % 2 == 0) ? 1 : 18;
-        pair p = new pair(x, y);
+        Pair p = new Pair(x, y);
         //Opretter spilleren, og returnere den.
         Player newPlayer = new Player(name, p, "up", 0);
         players.add(newPlayer);
@@ -74,15 +73,15 @@ public class ServerGameLogic {
     }
 
     public static boolean placeBomb (Player player) {
-        pair playerLocation = player.getLocation();
+        Pair playerLocation = player.getLocation();
         String direction = player.getDirection();
-        pair bombLocation = null;
+        Pair bombLocation = null;
         System.out.println(direction);
         switch (direction.toUpperCase()) {
-            case "UP":    bombLocation = new pair(playerLocation.getX() + 0,playerLocation.getY()-1);   break;
-            case "DOWN":  bombLocation = new pair(playerLocation.getX() + 0,playerLocation.getY()+1);;  break;
-            case "LEFT":  bombLocation = new pair(playerLocation.getX() - 1,playerLocation.getY());;  break;
-            case "RIGHT": bombLocation = new pair(playerLocation.getX() + 1,playerLocation.getY());; break;
+            case "UP":    bombLocation = new Pair(playerLocation.getX() + 0,playerLocation.getY()-1);   break;
+            case "DOWN":  bombLocation = new Pair(playerLocation.getX() + 0,playerLocation.getY()+1);;  break;
+            case "LEFT":  bombLocation = new Pair(playerLocation.getX() - 1,playerLocation.getY());;  break;
+            case "RIGHT": bombLocation = new Pair(playerLocation.getX() + 1,playerLocation.getY());; break;
         }
 
         if (!isFreeSpot(bombLocation.getX(), bombLocation.getY())) {
@@ -109,7 +108,7 @@ public class ServerGameLogic {
             sendData();
             return returnBol;
         }
-        pair newpos = new pair(x + delta_x, y + delta_y);
+        Pair newpos = new Pair(x + delta_x, y + delta_y);
         player.setLocation(newpos);
         returnBol = true;
 
@@ -122,7 +121,7 @@ public class ServerGameLogic {
         return returnBol;
     }
 
-    private static void playerFoundChest(Player player, pair position) {
+    private static void playerFoundChest(Player player, Pair position) {
         int index = 0;
         boolean found = false;
         Chest chest = null;
@@ -150,7 +149,7 @@ public class ServerGameLogic {
         return null;
     }
 
-    public static pair getRandomFreePosition()
+    public static Pair getRandomFreePosition()
     // finds a random new position which is not wall
     // and not occupied by other players
     {
@@ -171,7 +170,7 @@ public class ServerGameLogic {
 
             }
         }
-        pair p = new pair(x, y);
+        Pair p = new Pair(x, y);
         return p;
     }
 }

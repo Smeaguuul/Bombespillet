@@ -30,7 +30,7 @@ public class ClientListenThread extends Thread {
                 String[] playerStrings = stringObjekter[1].split("#");
                 for (int i = 1; i < playerStrings.length; i++) {
                     String[] playerInfo = playerStrings[i].split(",");
-                    pair pair = new pair(Integer.valueOf(playerInfo[1]), Integer.valueOf(playerInfo[2]));
+                    Pair pair = new Pair(Integer.valueOf(playerInfo[1]), Integer.valueOf(playerInfo[2]));
                     Player player = new Player(playerInfo[0], pair, playerInfo[3], Integer.valueOf(playerInfo[4]));
                     playerArrayList.add(player);
                 }
@@ -38,7 +38,7 @@ public class ClientListenThread extends Thread {
                 String[] chestStrings = stringObjekter[2].split("#");
                 for (int i = 1; i < chestStrings.length; i++) {
                     String[] chestInfo = chestStrings[i].split(",");
-                    Chest chest = new Chest(new pair(Integer.valueOf(chestInfo[0]), Integer.valueOf(chestInfo[1])));
+                    Chest chest = new Chest(new Pair(Integer.valueOf(chestInfo[0]), Integer.valueOf(chestInfo[1])));
                     chestArrayList.add(chest);
                 }
 
@@ -46,7 +46,7 @@ public class ClientListenThread extends Thread {
                 String[] bombStrings = stringObjekter[3].split("#");
                 for (int i = 1; i < bombStrings.length; i++) {
                     String[] bombInfo = bombStrings[i].split(",");
-                    Bomb bomb = new Bomb(new pair(Integer.valueOf(bombInfo[0]), Integer.valueOf(bombInfo[1])), LocalTime.parse(bombInfo[2]));
+                    Bomb bomb = new Bomb(new Pair(Integer.valueOf(bombInfo[0]), Integer.valueOf(bombInfo[1])), LocalTime.parse(bombInfo[2]));
                     bombArrayList.add(bomb);
                 }
                 ClientGameLogic.setObjectLists(playerArrayList, chestArrayList, bombArrayList);

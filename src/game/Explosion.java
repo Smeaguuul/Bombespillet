@@ -1,10 +1,15 @@
 package game;
 
-public class Explosion implements getLocation {
-    pair location;
+public class Explosion implements Item {
+    Pair location;
 
     @Override
-    public pair getLocation() {
+    public Pair getLocation() {
         return location;
+    }
+
+    @Override
+    public String getType() {
+        return "explosion";
     }
 }

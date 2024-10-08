@@ -1,10 +1,10 @@
 package game;
 
-public class Chest implements getLocation {
+public class Chest implements Item {
     int points;
-    pair location;
+    Pair location;
 
-    public Chest(pair location) {
+    public Chest(Pair location) {
         this.points = 20;
         this.location = location;
     }
@@ -13,8 +13,13 @@ public class Chest implements getLocation {
         return points;
     }
 
-    public pair getLocation() {
+    public Pair getLocation() {
         return location;
+    }
+
+    @Override
+    public String getType() {
+        return "chest";
     }
 
     @Override

@@ -2,16 +2,16 @@ package game;
 
 import java.time.LocalTime;
 
-public class Bomb implements getLocation {
-    private pair location;
+public class Bomb implements Item {
+    private Pair location;
     private LocalTime placed;
 
-    public Bomb(pair location) {
+    public Bomb(Pair location) {
         this.location = location;
         placed = LocalTime.now();
     }
 
-    public Bomb(pair location, LocalTime placed) {
+    public Bomb(Pair location, LocalTime placed) {
         this.location = location;
         this.placed = placed;
     }
@@ -21,7 +21,12 @@ public class Bomb implements getLocation {
         return location + "," + placed;
     }
 
-    public pair getLocation() {
+    public Pair getLocation() {
         return location;
+    }
+
+    @Override
+    public String getType() {
+        return "bomb";
     }
 }

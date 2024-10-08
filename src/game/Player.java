@@ -1,12 +1,14 @@
 package game;
 
-public class Player implements getLocation {
+import javafx.scene.image.ImageView;
+
+public class Player implements Item {
     String name;
-    pair location;
+    Pair location;
     int point;
     String direction;
 
-    public Player(String name, pair loc, String direction, int score) {
+    public Player(String name, Pair loc, String direction, int score) {
         this.name = name;
         this.location = loc;
         this.direction = direction;
@@ -21,11 +23,28 @@ public class Player implements getLocation {
         return point;
     }
 
-    public pair getLocation() {
+    public Pair getLocation() {
         return this.location;
     }
 
-    public void setLocation(pair p) {
+    @Override
+    public String getType() {
+        if (direction.equals("right")) {
+            return "heroRight";
+        };
+        if (direction.equals("left")) {
+            return "heroLeft";
+        };
+        if (direction.equals("up")) {
+            return "heroUp";
+        };
+        if (direction.equals("down")) {
+            return "heroDown";
+        };
+        return "heroUp"; //Default type
+    }
+
+    public void setLocation(Pair p) {
         this.location = p;
     }
 

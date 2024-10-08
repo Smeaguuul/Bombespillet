@@ -3,7 +3,7 @@ package game.Client;
 import game.Bomb;
 import game.Chest;
 import game.Player;
-import game.getLocation;
+import game.Item;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -25,17 +25,17 @@ public class ClientGameLogic {
     }
 
     public static void setObjectLists(ArrayList<Player> newPlayerList, ArrayList<Chest> newChestArrayList, ArrayList<Bomb> newBombArrayList){
-        ArrayList<getLocation> locations = new ArrayList<>();
-        locations.addAll(playerList);
-        locations.addAll(chestArrayList);
-        locations.addAll(bombArrayList);
+        ArrayList<Item> items = new ArrayList<>();
+        items.addAll(playerList);
+        items.addAll(chestArrayList);
+        items.addAll(bombArrayList);
 
-        Gui.removeItems(locations);
+        Gui.removeItems(items);
         playerList = new ArrayList<>(newPlayerList);
         chestArrayList = new ArrayList<>(newChestArrayList);
         bombArrayList = new ArrayList<>(newBombArrayList);
 
-        Gui.updateGUI(playerList, chestArrayList, bombArrayList);
+        Gui.updateGUI(items);
     }
 
     public static void placeBomb () {

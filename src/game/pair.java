@@ -1,9 +1,9 @@
 package game;
 
-public class pair {
+public class Pair {
 	int x;
 	int y;
-	public pair(int x, int y) {
+	public Pair(int x, int y) {
 		super();
 		this.x = x;
 		this.y = y;
@@ -25,7 +25,7 @@ public class pair {
 		return x + "," + y;
 	}
 
-	public boolean equals(pair pair) {
+	public boolean equals(Pair pair) {
 		return pair.y == y && pair.x == x;
 	}
 }
