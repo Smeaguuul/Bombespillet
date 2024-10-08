@@ -5,6 +5,7 @@ import game.Player;
 import java.net.*;
 import java.io.*;
 
+import static game.Server.ServerGameLogic.sendData;
 import static game.Server.ServerGameLogic.updatePlayer;
 
 public class ServerThread extends Thread{
@@ -20,6 +21,7 @@ public class ServerThread extends Thread{
 			BufferedReader inFromClient = new BufferedReader(new InputStreamReader(connSocket.getInputStream()));
 			DataOutputStream outToClient = new DataOutputStream(connSocket.getOutputStream());
 			ServerGameLogic.addConnection(outToClient);
+			sendData();
 
 			//Opretter spilleren
 			String clientNavn = inFromClient.readLine();

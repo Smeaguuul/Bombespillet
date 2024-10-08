@@ -7,6 +7,7 @@ import game.pair;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -15,6 +16,7 @@ public class ServerGameLogic {
     public static List<Player> players = new ArrayList<Player>();
     public static List<DataOutputStream> clientConnections = new ArrayList<>();
     public static List<Chest> chests = new ArrayList<>();
+    private static LocalTime lastSent;
 
     public static void addConnection(DataOutputStream clientConnection) {
         clientConnections.add(clientConnection);
@@ -24,7 +26,7 @@ public class ServerGameLogic {
         chests.add(chest);
     }
 
-    public static void sendData() {
+    public synchronized static void sendData() {
         //Bygger stringen med alt infoen
         StringBuilder outString = new StringBuilder();
         outString.append("@");
