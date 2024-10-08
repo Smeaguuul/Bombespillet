@@ -25,17 +25,11 @@ public class Gui extends Application {
     public static final int size = 30;
     public static final int scene_height = size * 20 + 50;
     public static final int scene_width = size * 20 + 200;
-    public static Image image_floor;
-    public static Image image_wall;
-    public static Image hero_right, hero_left, hero_up, hero_down;
-    private static Image chest;
-    private static Image bomb;
-    private static Image explosion;
 
 
     private static Label[][] fields;
     private static TextArea scoreList;
-    private static Map<String, Image> imageType;
+    private static Map<String, Image> imageType = new HashMap<>();
 
 
     // -------------------------------------------
@@ -45,6 +39,12 @@ public class Gui extends Application {
     // |                          | (1,1)        |
     // -------------------------------------------
 
+    private void addPictures(List<String> types) {
+        for (String type : types) {
+            Image image = new Image(getClass().getResourceAsStream("Image/" + type + ".png"), size, size, false, false);
+            imageType.put(type, image);
+        }
+    }
     @Override
     public void start(Stage primaryStage) {
         try {
@@ -62,33 +62,15 @@ public class Gui extends Application {
             scoreList = new TextArea();
 
             GridPane boardGrid = new GridPane();
-
-            image_wall = new Image(getClass().getResourceAsStream("Image/wall4.png"), size, size, false, false);
-            image_floor = new Image(getClass().getResourceAsStream("Image/floor1.png"), size, size, false, false);
-
-            hero_right = new Image(getClass().getResourceAsStream("Image/heroRight.png"), size, size, false, false);
-            hero_left = new Image(getClass().getResourceAsStream("Image/heroLeft.png"), size, size, false, false);
-            hero_up = new Image(getClass().getResourceAsStream("Image/heroUp.png"), size, size, false, false);
-            hero_down = new Image(getClass().getResourceAsStream("Image/heroDown.png"), size, size, false, false);
-            chest = new Image(getClass().getResourceAsStream("Image/chest.png"), size, size, false, false);
-            bomb = new Image(getClass().getResourceAsStream("Image/bomb.png"), size, size, false, false);
-            explosion = new Image(getClass().getResourceAsStream("Image/explosion.png"), size, size, false, false);
-
-            imageType = new HashMap<>();
-            imageType.put("chest", chest);
-            imageType.put("bomb", bomb);
-            imageType.put("explosion", explosion);
-            imageType.put("heroRight", hero_right);
-            imageType.put("heroLeft", hero_left);
-            imageType.put("heroUp", hero_up);
-            imageType.put("heroDown", hero_down);
+            ArrayList<String> types = new ArrayList<>();
+            addPictures(List.of("wall4", "floor1", "heroRight", "heroLeft", "heroUp", "heroDown", "chest", "bomb", "explosion"));
 
             fields = new Label[20][20];
             for (int j = 0; j < 20; j++) {
                 for (int i = 0; i < 20; i++) {
                     switch (Generel.board[j].charAt(i)) {
-                        case 'w': fields[i][j] = new Label("", new ImageView(image_wall)); break;
-                        case ' ': fields[i][j] = new Label("", new ImageView(image_floor)); break;
+                        case 'w': fields[i][j] = new Label("", new ImageView(imageType.get("wall4"))); break;
+                        case ' ': fields[i][j] = new Label("", new ImageView(imageType.get("floor1"))); break;
                         default: throw new Exception("Illegal field value: " + Generel.board[j].charAt(i));
                     }
                     boardGrid.add(fields[i][j], i, j);
@@ -118,9 +100,8 @@ public class Gui extends Application {
                 }
             });
 
-            // Putting default players on screen
             for (int i = 0; i < ClientGameLogic.playerList.size(); i++) {
-                fields[ClientGameLogic.playerList.get(i).getXpos()][ClientGameLogic.playerList.get(i).getYpos()].setGraphic(new ImageView(hero_up));
+                fields[ClientGameLogic.playerList.get(i).getXpos()][ClientGameLogic.playerList.get(i).getYpos()].setGraphic(new ImageView(imageType.get("heroup")));
             }
             scoreList.setText(getScoreList());
         } catch (Exception e) {
@@ -130,7 +111,7 @@ public class Gui extends Application {
 
     public static void removeObjectOnScreen(Pair oldpos) {
         Platform.runLater(() -> {
-            fields[oldpos.getX()][oldpos.getY()].setGraphic(new ImageView(image_floor));
+            fields[oldpos.getX()][oldpos.getY()].setGraphic(new ImageView(imageType.get("floor1")));
         });
     }
 
