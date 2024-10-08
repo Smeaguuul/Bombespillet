@@ -219,17 +219,17 @@ public class ServerGameLogic {
         hit = false;
         i = y - 1;
         while (!hit && i >= y - 3) {
-            if (isFreeSpot(i, y)) {
-                explosions.add(new Explosion(new Pair(i, y)));
+            if (isFreeSpot(x, i)) {
+                explosions.add(new Explosion(new Pair(x, i)));
                 i--;
             } else hit = true;
         }
         hit = false;
         i = y + 1;
         while (!hit && i <= y + 3) {
-            if (isFreeSpot(i, y)) {
-                explosions.add(new Explosion(new Pair(i, y)));
-                i--;
+            if (isFreeSpot(x, i)) {
+                explosions.add(new Explosion(new Pair(x, i)));
+                i++;
             } else hit = true;
         }
     }
