@@ -1,5 +1,7 @@
 package game;
 
+import java.util.Objects;
+
 public class Chest implements Item {
     int points;
     Pair location;

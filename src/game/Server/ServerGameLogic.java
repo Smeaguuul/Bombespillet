@@ -158,7 +158,20 @@ public class ServerGameLogic {
     }
 
     private static boolean isFreeSpot(int x, int y) {
-        return Generel.board[y].charAt(x) != 'w' && getPlayerAt(x, y) == null;
+        return Generel.board[y].charAt(x) != 'w' && getPlayerAt(x, y) == null && getBombAt(x, y) == null;
+    }
+
+    private static Bomb getBombAt(int x, int y) {
+        for (Bomb bomb : bombs) {
+            if (bomb.getLocation().getX() == x && bomb.getLocation().getY() == y) {
+                return bomb;
+            }
+        }
+        return null;
+    }
+
+    private static boolean noObstruction(int x, int y) {
+        return Generel.board[y].charAt(x) != 'w';
     }
 
     public static Player getPlayerAt(int x, int y) {
@@ -194,6 +207,24 @@ public class ServerGameLogic {
         Pair p = new Pair(x, y);
         return p;
     }
+    
+    private static void checkForVictims(Pair explosionLocation) {
+        //Checker om der er en spiller på en locationen, og respawner dem hvis de er
+        ArrayList<Player> playersToKill = new ArrayList<>();
+        for (int i = 0; i < players.size(); i++) {
+            if (players.get(i).getLocation().equals(explosionLocation)){
+                playersToKill.add(players.get(i));
+            }
+        }
+        //Laver en kiste med point, og trække tilsvarende point fra spilleren
+        for (int i = 0; i < playersToKill.size(); i++) {
+            Player player = playersToKill.get(i);
+            player.subtractPoints(20);
+            Chest chest = new Chest(player.getLocation());
+            chests.add(chest);
+            player.setLocation(getRandomFreePosition());
+        }
+    }
 
     public static void bombExploded(Bomb bomb) {
         bombs.remove(bomb);
@@ -204,52 +235,60 @@ public class ServerGameLogic {
         boolean hit = false;
         int i = x - 1;
         Explosion explosion = new Explosion(pair);
+        checkForVictims(pair);
         explosions.add(explosion);
         localExplosions.add(explosion);
 
         while (!hit && i >= x - 3) {
-            if (isFreeSpot(i, y)) {
-                explosion = new Explosion(new Pair(i,y));
-                explosions.add(explosion);
-                localExplosions.add(explosion);
+            if (noObstruction(i, y)) {
+                Pair location = new Pair(i,y);
+                localExplosions.add(makeExplosion(location));
                 i--;
             } else hit = true;
         }
         hit = false;
         i = x + 1;
         while (!hit && i <= x + 3) {
-            if (isFreeSpot(i, y)) {
-                explosion = new Explosion(new Pair(i,y));
-                explosions.add(explosion);
-                localExplosions.add(explosion);
+            if (noObstruction(i, y)) {
+                Pair location = new Pair(i,y);
+                localExplosions.add(makeExplosion(location));
                 i++;
             } else hit = true;
         }
         hit = false;
         i = y - 1;
         while (!hit && i >= y - 3) {
-            if (isFreeSpot(x, i)) {
-                explosion = new Explosion(new Pair(x,i));
-                explosions.add(explosion);
-                localExplosions.add(explosion);
+            if (noObstruction(x, i)) {
+                Pair location = new Pair(x,i);
+                localExplosions.add(makeExplosion(location));
                 i--;
             } else hit = true;
         }
         hit = false;
         i = y + 1;
         while (!hit && i <= y + 3) {
-            if (isFreeSpot(x, i)) {
-                explosion = new Explosion(new Pair(x,i));
-                explosions.add(explosion);
-                localExplosions.add(explosion);
+            if (noObstruction(x, i)) {
+                Pair location = new Pair(x, i);
+                localExplosions.add(makeExplosion(location));
                 i++;
             } else hit = true;
         }
+        //Starter en tråd som holder øje med eksplosionerne og kalder removeExplosions(...) når de er gamle nok.
         RemoveExplosionThread removeExplosionThread = new RemoveExplosionThread(localExplosions);
         removeExplosionThread.start();
+        sendData();
     }
 
-    public static void removeExplosions(ArrayList<Explosion> localExplosions){
-        explosions.removeAll(localExplosions);
+    private static Explosion makeExplosion(Pair location) {
+        Explosion explosion = new Explosion(location);
+        checkForVictims(location);
+        explosion = new Explosion(location);
+        explosions.add(explosion);
+        return explosion;
+    }
+
+    public static void removeExplosions(ArrayList<Explosion> expiredExplosions){
+        explosions.removeAll(expiredExplosions);
+        sendData();
     }
 }

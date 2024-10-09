@@ -53,7 +53,7 @@ public class Gui extends Application {
             grid.setVgap(10);
             grid.setPadding(new Insets(0, 10, 0, 10));
 
-            Text mazeLabel = new Text("Maze:");
+            Text mazeLabel = new Text("The Bomber Game:");
             mazeLabel.setFont(Font.font("Arial", FontWeight.BOLD, 20));
 
             Text scoreLabel = new Text("Score:");
@@ -146,7 +146,7 @@ public class Gui extends Application {
     public static String getScoreList() {
         StringBuffer b = new StringBuffer(100);
         for (Player p : ClientGameLogic.playerList) {
-            b.append(p + "\r\n");
+            b.append(p.getName() + ": " + p.getPoint() + " points" + "\r\n");
         }
         return b.toString();
     }

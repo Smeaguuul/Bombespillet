@@ -79,4 +79,8 @@ public class Player implements Item {
     public String toString() {
         return name + "," + location + "," + direction + "," + point;
     }
+
+    public void subtractPoints(int points) {
+        point -= points;
+    }
 }
